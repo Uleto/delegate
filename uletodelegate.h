@@ -7,6 +7,7 @@
 
 #include "uletoabstractfunctionholder.h"
 #include "uletofunctionholder.h"
+#include "uletomethodholder.h"
 
 namespace Uleto
 {
@@ -21,10 +22,17 @@ public:
     Delegate()
     {}
 
-    template <typename F2unctionType>
-    Delegate(F2unctionType f2unction) :
+    template <typename FunctionType>
+    Delegate(FunctionType function) :
         _functionHolder(new FunctionHolder<ReturnType (ArgumentsTypes ...)>(
-                            f2unction))
+                            function))
+    {}
+
+    template <typename ObjectType, typename FunctionType>
+    Delegate(ObjectType *object, FunctionType function) :
+        _functionHolder(new MethodHolder
+                        <ReturnType (ObjectType, ArgumentsTypes ...)>(
+                            function, object))
     {}
 
     virtual ~Delegate()

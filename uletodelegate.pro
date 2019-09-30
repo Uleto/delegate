@@ -23,13 +23,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        uletodelegate.cpp
+        uletoabstractfunctionholder.cpp \
+        uletodelegate.cpp \
+        uletofunctionholder.cpp \
+        uletomethodholder.cpp
 
 HEADERS += \
+        uletoabstractfunctionholder.h \
         uletodelegate.h \
-        uletodelegate_global.h 
+        uletodelegate_global.h  \
+        uletofunctionholder.h \
+        uletomethodholder.h
 
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
+DISTFILES += \
+    uletodelegate.pro.user
