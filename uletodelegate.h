@@ -40,8 +40,9 @@ public:
 
     ReturnType operator()(ArgumentsTypes ... args)
     {
-        Q_ASSERT_X(!_functionHolder.isNull(), "Delegate::operator()",
+        Q_ASSERT_X(!_functionHolder.isNull(), Q_FUNC_INFO,
                    "function not specified");
+
         return _functionHolder->invoke(args ...);
     }
 

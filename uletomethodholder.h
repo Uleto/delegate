@@ -1,6 +1,8 @@
 #ifndef ULETO_METHODHOLDER_H
 #define ULETO_METHODHOLDER_H
 
+#include <QtGlobal>
+
 #include "uletoabstractfunctionholder.h"
 
 namespace Uleto
@@ -32,10 +34,11 @@ public:
 
     virtual ReturnType invoke(ObjectType *object, ArgumentsTypes ... args)
     {
-        Q_ASSERT_X(object != nullptr, "MethodHolder::invoke",
-                   "null pointer to object");
-        Q_ASSERT_X(_function != nullptr, "MethodHolder::invoke",
+        Q_ASSERT_X(object != nullptr, Q_FUNC_INFO, "null pointer to object");
+
+        Q_ASSERT_X(_function != nullptr, Q_FUNC_INFO,
                    "null pointer to function");
+
         return (object->*_function)(args ...);
     }
 
