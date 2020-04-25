@@ -16,24 +16,34 @@ template <typename ReturnType, typename... ArgumentsTypes>
 class Function<ReturnType(ArgumentsTypes...)>
     : public AbstractHandler<ReturnType(ArgumentsTypes...)> {
  public:
+  typedef AbstractHandler<ReturnType(ArgumentsTypes...)> BasicHandler;
+
   typedef ReturnType (*FunctionType)(ArgumentsTypes...);
 
  public:
-  Function(FunctionType aFunction)
-      : AbstractHandler<ReturnType(ArgumentsTypes...)>(),
-        mFunction(aFunction) {}
+  Function(FunctionType aFunction) : BasicHandler(), mFunction(aFunction) {}
+
+  Function(const Function &aOther) = default;
+
+  Function &operator=(const Function &aOther) = default;
 
   virtual ~Function() {}
 
-  virtual ReturnType invoke(ArgumentsTypes... aArgs) {
+  //  virtual ReturnType invoke(ArgumentsTypes... aArgs) const {
+  //    Q_ASSERT_X(mFunction != nullptr, Q_FUNC_INFO, "null pointer to
+  //    function");
+
+  //    return mFunction(aArgs...);
+  //  }
+
+  virtual ReturnType invoke(ArgumentsTypes... aArgs) override {
     Q_ASSERT_X(mFunction != nullptr, Q_FUNC_INFO, "null pointer to function");
 
     return mFunction(aArgs...);
   }
 
-  virtual AbstractHandler<ReturnType(ArgumentsTypes...)> *clone() const {
-    return dynamic_cast<AbstractHandler<ReturnType(ArgumentsTypes...)> *>(
-        new Function(mFunction));
+  virtual BasicHandler *clone() const override {
+    return dynamic_cast<BasicHandler *>(new Function(mFunction));
   }
 
  private:

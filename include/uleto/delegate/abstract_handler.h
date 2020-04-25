@@ -13,16 +13,17 @@ class AbstractHandler<ReturnType(ArgumentsTypes...)> {
  public:
   AbstractHandler() {}
 
+  AbstractHandler(const AbstractHandler& aOther) = default;
+
+  AbstractHandler& operator=(const AbstractHandler& aOther) = default;
+
   virtual ~AbstractHandler() {}
+
+  virtual ReturnType invoke(ArgumentsTypes... aArgs) const = 0;
 
   virtual ReturnType invoke(ArgumentsTypes... aArgs) = 0;
 
   virtual AbstractHandler* clone() const = 0;
-
- private:
-  AbstractHandler(const AbstractHandler& other);
-
-  AbstractHandler& operator=(const AbstractHandler& other);
 };
 
 }  // namespace delegate
