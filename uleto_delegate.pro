@@ -6,7 +6,7 @@
 
 QT       -= gui
 
-TARGET = uletodelegate
+TARGET = uleto_delegate
 TEMPLATE = lib
 
 DEFINES += ULETODELEGATE_LIBRARY
@@ -23,17 +23,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        uletoabstractfunctionholder.cpp \
-        uletodelegate.cpp \
-        uletofunctionholder.cpp \
-        uletomethodholder.cpp
+        abstract_handler.cpp \
+        delegate.cpp \
+        function.cpp \
+        method.cpp
+#        uletoabstractfunctionholder.cpp \
 
 HEADERS += \
-        uletoabstractfunctionholder.h \
-        uletodelegate.h \
-        uletodelegate_global.h  \
-        uletofunctionholder.h \
-        uletomethodholder.h
+        abstract_handler.h \
+        delegate.h \
+        function.h \
+        global.h \
+        method.h
+#        uletoabstractfunctionholder.h \
 
 unix {
     target.path = /usr/lib
