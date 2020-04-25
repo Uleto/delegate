@@ -23,19 +23,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        src/abstract_handler.cpp \
-        src/delegate.cpp \
-        src/function.cpp \
-        src/method.cpp
-#        uletoabstractfunctionholder.cpp \
+        $$PWD/src/abstract_handler.cpp \
+        $$PWD/src/delegate.cpp \
+        $$PWD/src/function.cpp \
+        $$PWD/src/method.cpp
 
 HEADERS += \
-        include/uleto/delegate/abstract_handler.h \
-        include/uleto/delegate/delegate.h \
-        include/uleto/delegate/function.h \
-        include/uleto/delegate/global.h \
-        include/uleto/delegate/method.h
-#        uletoabstractfunctionholder.h \
+        $$PWD/include/uleto/delegate/abstract_handler.h \
+        $$PWD/include/uleto/delegate/delegate.h \
+        $$PWD/include/uleto/delegate/function.h \
+        $$PWD/include/uleto/delegate/global.h \
+        $$PWD/include/uleto/delegate/method.h
+
+INCLUDEPATH += $$PWD/include/uleto/delegate
 
 unix {
     target.path = /usr/lib

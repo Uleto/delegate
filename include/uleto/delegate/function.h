@@ -37,7 +37,7 @@ class Function<ReturnType(ArgumentsTypes...)>
   }
 
  private:
-  FunctionType mFunction;
+  FunctionType mFunction{nullptr};
 };
 
 }  // namespace delegate

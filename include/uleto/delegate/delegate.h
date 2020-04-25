@@ -25,7 +25,7 @@ class Delegate<ReturnType(ArgumentsTypes...)> {
       : mHandler(new Function<ReturnType(ArgumentsTypes...)>(aFunction)) {}
 
   template <typename ObjectType, typename MethodType>
-  Delegate(ObjectType* aObject, MethodType aMethod)
+  Delegate(ObjectType *const aObject, MethodType aMethod)
       : mHandler(new Method<ReturnType(ObjectType, ArgumentsTypes...)>(
             aMethod, aObject)) {}
 

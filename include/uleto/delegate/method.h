@@ -30,7 +30,8 @@ class Method<ReturnType(ObjectType, ArgumentsTypes...)>
     return invoke(mObject, aArgs...);
   }
 
-  virtual ReturnType invoke(ObjectType *aObject, ArgumentsTypes... aArgs) {
+  virtual ReturnType invoke(ObjectType *const aObject,
+                            ArgumentsTypes... aArgs) {
     Q_ASSERT_X(aObject != nullptr, Q_FUNC_INFO, "null pointer to object");
 
     Q_ASSERT_X(mMethod != nullptr, Q_FUNC_INFO, "null pointer to method");
@@ -44,9 +45,9 @@ class Method<ReturnType(ObjectType, ArgumentsTypes...)>
   }
 
  private:
-  MethodType mMethod;
+  MethodType mMethod {nullptr};
 
-  ObjectType *mObject;
+  ObjectType *mObject {nullptr};
 };
 
 }  // namespace delegate
