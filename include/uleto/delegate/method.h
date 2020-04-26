@@ -44,11 +44,19 @@ class Method<ReturnType(ObjectType, ArgumentsTypes...)>
   virtual ~Method() {}
 
   virtual ReturnType invoke(ArgumentsTypes... aArgs) const override {
-    return invoke(mObject != nullptr ? mObject : mConstObject, aArgs...);
+    if (mObject != nullptr) {
+      return invoke(mObject, aArgs...);
+    }
+
+    return invoke(mConstObject, aArgs...);
   }
 
   virtual ReturnType invoke(ArgumentsTypes... aArgs) override {
-    return invoke(mObject != nullptr ? mObject : mConstObject, aArgs...);
+    if (mObject != nullptr) {
+      return invoke(mObject, aArgs...);
+    }
+
+    return invoke(mConstObject, aArgs...);
   }
 
   virtual ReturnType invoke(const ObjectType *const aObject,

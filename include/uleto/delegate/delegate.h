@@ -88,6 +88,14 @@ class Delegate<ReturnType(ArgumentsTypes...)> {
     return handler->invoke(aArgs...);
   }
 
+  void clear() {
+    if (isNull()) {
+      return;
+    }
+
+    mHandler.clear();
+  }
+
   bool isNull() const { return mHandler.isNull(); }
 
  private:
