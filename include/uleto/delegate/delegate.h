@@ -12,31 +12,30 @@ namespace uleto {
 
 namespace delegate {
 
-template <typename HandlerType>
-class Delegate;
-
 template <typename ReturnType, typename... ArgumentsTypes>
-class Delegate<ReturnType(ArgumentsTypes...)> {
+class Delegate {
  public:
-  typedef AbstractHandler<ReturnType(ArgumentsTypes...)> HandlerType;
+  using HandlerType = AbstractHandler<ReturnType, ArgumentsTypes...>;
+
+  using FunctionType = Function<ReturnType, ArgumentsTypes...>;
+
+  template <typename ObjectType>
+  using MethodType = Method<ReturnType, ObjectType, ArgumentsTypes...>;
 
  public:
   Delegate() {}
 
-  template <typename FunctionType>
-  Delegate(const Function<FunctionType> &aFunction)
-      : mHandler(new Function<FunctionType>(aFunction)) {}
+  Delegate(const FunctionType &aFunction)
+      : mHandler(new FunctionType(aFunction)) {}
 
-  template <typename MethodType>
-  Delegate(const Method<MethodType> &aMethod)
-      : mHandler(new Method<MethodType>(aMethod)) {}
+  template <typename ObjectType>
+  Delegate(const MethodType<ObjectType> &aMethod)
+      : mHandler(new MethodType<ObjectType>(aMethod)) {}
 
   Delegate(const Delegate &aOther) = default;
 
-  template <typename FunctionType>
-  Delegate &operator=(const Function<FunctionType> &aFunction) {
-    Function<FunctionType> *function{
-        dynamic_cast<Function<FunctionType> *>(mHandler.data())};
+  Delegate &operator=(const FunctionType &aFunction) {
+    FunctionType *function{dynamic_cast<FunctionType *>(mHandler.data())};
 
     if (mHandler.isNull() || function == nullptr) {
       mHandler.reset(new Function<FunctionType>(aFunction));
@@ -50,13 +49,13 @@ class Delegate<ReturnType(ArgumentsTypes...)> {
     return *this;
   };
 
-  template <typename MethodType>
-  Delegate &operator=(const Method<MethodType> &aMethod) {
-    Method<MethodType> *method{
-        dynamic_cast<Method<MethodType> *>(mHandler.data())};
+  template <typename ObjectType>
+  Delegate &operator=(const MethodType<ObjectType> &aMethod) {
+    MethodType<ObjectType> *method{
+        dynamic_cast<MethodType<ObjectType> *>(mHandler.data())};
 
     if (mHandler.isNull() || method == nullptr) {
-      mHandler.reset(new Method<MethodType>(aMethod));
+      mHandler.reset(new MethodType<ObjectType>(aMethod));
 
       return *this;
       ;

@@ -9,14 +9,10 @@ namespace uleto {
 
 namespace delegate {
 
-template <typename FunctionType>
-class Function;
-
 template <typename ReturnType, typename... ArgumentsTypes>
-class Function<ReturnType(ArgumentsTypes...)>
-    : public AbstractHandler<ReturnType(ArgumentsTypes...)> {
+class Function : public AbstractHandler<ReturnType, ArgumentsTypes...> {
  public:
-  typedef AbstractHandler<ReturnType(ArgumentsTypes...)> BasicHandler;
+  using BasicHandler = AbstractHandler<ReturnType, ArgumentsTypes...>;
 
   typedef ReturnType (*FunctionType)(ArgumentsTypes...);
 

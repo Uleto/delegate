@@ -5,11 +5,8 @@ namespace uleto {
 
 namespace delegate {
 
-template <typename FunctionType>
-class AbstractHandler;
-
 template <typename ReturnType, typename... ArgumentsTypes>
-class AbstractHandler<ReturnType(ArgumentsTypes...)> {
+class AbstractHandler {
  public:
   AbstractHandler() {}
 
