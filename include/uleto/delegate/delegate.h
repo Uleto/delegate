@@ -85,7 +85,7 @@ class Delegate<ReturnType(ArgumentsTypes...)> {
 
     Q_ASSERT_X(handler != nullptr, Q_FUNC_INFO, "null pointer to handler");
 
-    return mHandler->invoke(aArgs...);
+    return handler->invoke(aArgs...);
   }
 
   bool isNull() const { return mHandler.isNull(); }

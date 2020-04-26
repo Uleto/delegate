@@ -23,8 +23,19 @@ class Method<ReturnType(ObjectType, ArgumentsTypes...)>
   typedef ReturnType (ObjectType::*ConstMethodType)(ArgumentsTypes...) const;
 
  public:
+  Method(ConstMethodType aConstMethod,
+         const ObjectType *const aObject = nullptr)
+      : BasicHandler(), mConstMethod(aConstMethod), mConstObject(aObject) {}
+
   Method(MethodType aMethod, ObjectType *const aObject = nullptr)
       : BasicHandler(), mMethod(aMethod), mObject(aObject) {}
+
+  Method(MethodType aMethod, ConstMethodType aConstMethod,
+         ObjectType *const aObject = nullptr)
+      : BasicHandler(),
+        mMethod(aMethod),
+        mConstMethod(aConstMethod),
+        mObject(aObject) {}
 
   Method(const Method &aOther) = default;
 
@@ -33,29 +44,42 @@ class Method<ReturnType(ObjectType, ArgumentsTypes...)>
   virtual ~Method() {}
 
   virtual ReturnType invoke(ArgumentsTypes... aArgs) const override {
-    return invoke(mObject, aArgs...);
+    return invoke(mObject != nullptr ? mObject : mConstObject, aArgs...);
   }
 
   virtual ReturnType invoke(ArgumentsTypes... aArgs) override {
-    return invoke(mObject, aArgs...);
+    return invoke(mObject != nullptr ? mObject : mConstObject, aArgs...);
+  }
+
+  virtual ReturnType invoke(const ObjectType *const aObject,
+                            ArgumentsTypes... aArgs) const {
+    Q_ASSERT_X(aObject != nullptr, Q_FUNC_INFO, "null pointer to object");
+
+    Q_ASSERT_X(mConstMethod != nullptr, Q_FUNC_INFO,
+               "null pointer to const method");
+
+    return (aObject->*mConstMethod)(aArgs...);
   }
 
   virtual ReturnType invoke(ObjectType *const aObject,
                             ArgumentsTypes... aArgs) const {
     Q_ASSERT_X(aObject != nullptr, Q_FUNC_INFO, "null pointer to object");
 
-    Q_ASSERT_X(mMethod != nullptr, Q_FUNC_INFO, "null pointer to method");
+    Q_ASSERT_X(mConstMethod != nullptr, Q_FUNC_INFO,
+               "null pointer to const method");
 
-    return (aObject->*mMethod)(aArgs...);
+    return (aObject->*mConstMethod)(aArgs...);
   }
 
   virtual ReturnType invoke(ObjectType *const aObject,
                             ArgumentsTypes... aArgs) {
     Q_ASSERT_X(aObject != nullptr, Q_FUNC_INFO, "null pointer to object");
 
-    Q_ASSERT_X(mMethod != nullptr, Q_FUNC_INFO, "null pointer to method");
+    Q_ASSERT_X(mMethod != nullptr || mConstMethod != nullptr, Q_FUNC_INFO,
+               "null pointer to method");
 
-    return (aObject->*mMethod)(aArgs...);
+    return mMethod != nullptr ? (aObject->*mMethod)(aArgs...)
+                              : (aObject->*mConstMethod)(aArgs...);
   }
 
   virtual BasicHandler *clone() const override {
@@ -68,6 +92,8 @@ class Method<ReturnType(ObjectType, ArgumentsTypes...)>
   ConstMethodType mConstMethod{nullptr};
 
   ObjectType *mObject{nullptr};
+
+  const ObjectType *mConstObject{nullptr};
 };
 
 }  // namespace delegate
