@@ -75,7 +75,7 @@ class Delegate<ReturnType(ArgumentsTypes...)> {
     const HandlerType *handler{
         dynamic_cast<const HandlerType *>(mHandler.data())};
 
-    Q_ASSERT_X(handler != nullptr, Q_FUNC_INFO, "null pointer to handler");
+    Q_ASSERT_X(handler != nullptr, Q_FUNC_INFO, "null pointer to the handler");
 
     return handler->invoke(aArgs...);
   }
@@ -83,7 +83,7 @@ class Delegate<ReturnType(ArgumentsTypes...)> {
   ReturnType operator()(ArgumentsTypes... aArgs) {
     HandlerType *handler{dynamic_cast<HandlerType *>(mHandler.data())};
 
-    Q_ASSERT_X(handler != nullptr, Q_FUNC_INFO, "null pointer to handler");
+    Q_ASSERT_X(handler != nullptr, Q_FUNC_INFO, "null pointer to the handler");
 
     return handler->invoke(aArgs...);
   }

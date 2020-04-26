@@ -61,30 +61,30 @@ class Method<ReturnType(ObjectType, ArgumentsTypes...)>
 
   virtual ReturnType invoke(const ObjectType *const aObject,
                             ArgumentsTypes... aArgs) const {
-    Q_ASSERT_X(aObject != nullptr, Q_FUNC_INFO, "null pointer to object");
+    Q_ASSERT_X(aObject != nullptr, Q_FUNC_INFO, "null pointer to the object");
 
     Q_ASSERT_X(mConstMethod != nullptr, Q_FUNC_INFO,
-               "null pointer to const method");
+               "null pointer to the const method");
 
     return (aObject->*mConstMethod)(aArgs...);
   }
 
   virtual ReturnType invoke(ObjectType *const aObject,
                             ArgumentsTypes... aArgs) const {
-    Q_ASSERT_X(aObject != nullptr, Q_FUNC_INFO, "null pointer to object");
+    Q_ASSERT_X(aObject != nullptr, Q_FUNC_INFO, "null pointer to the object");
 
     Q_ASSERT_X(mConstMethod != nullptr, Q_FUNC_INFO,
-               "null pointer to const method");
+               "null pointer to the const method");
 
     return (aObject->*mConstMethod)(aArgs...);
   }
 
   virtual ReturnType invoke(ObjectType *const aObject,
                             ArgumentsTypes... aArgs) {
-    Q_ASSERT_X(aObject != nullptr, Q_FUNC_INFO, "null pointer to object");
+    Q_ASSERT_X(aObject != nullptr, Q_FUNC_INFO, "null pointer to the object");
 
     Q_ASSERT_X(mMethod != nullptr || mConstMethod != nullptr, Q_FUNC_INFO,
-               "null pointer to method");
+               "null pointer to the method");
 
     return mMethod != nullptr ? (aObject->*mMethod)(aArgs...)
                               : (aObject->*mConstMethod)(aArgs...);

@@ -30,13 +30,15 @@ class Function<ReturnType(ArgumentsTypes...)>
   virtual ~Function() {}
 
   virtual ReturnType invoke(ArgumentsTypes... aArgs) const override {
-    Q_ASSERT_X(mFunction != nullptr, Q_FUNC_INFO, "null pointer to function");
+    Q_ASSERT_X(mFunction != nullptr, Q_FUNC_INFO,
+               "null pointer to the function");
 
     return mFunction(aArgs...);
   }
 
   virtual ReturnType invoke(ArgumentsTypes... aArgs) override {
-    Q_ASSERT_X(mFunction != nullptr, Q_FUNC_INFO, "null pointer to function");
+    Q_ASSERT_X(mFunction != nullptr, Q_FUNC_INFO,
+               "null pointer to the function");
 
     return mFunction(aArgs...);
   }
